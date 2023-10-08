@@ -57,7 +57,7 @@ export function Home() {
       where("status", "==", statusSelected)
     );
 
-    await getDocs(querySnapshot)
+    getDocs(querySnapshot)
       .then((querySnapshot) => {
         const data = querySnapshot.docs.map((doc) => {
           const { plate, description, status, createdAt } = doc.data();

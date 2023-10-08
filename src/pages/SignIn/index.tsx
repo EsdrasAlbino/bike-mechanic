@@ -32,7 +32,7 @@ export function SignIn() {
     }
     setIsLoading(true);
 
-    await signInWithEmailAndPassword(auth, email, password)
+    signInWithEmailAndPassword(auth, email, password)
       .then(async (user) => {
         const uid = user.user.uid;
         const usersRef = doc(firestore, "users", uid);
