@@ -10,7 +10,7 @@ import {
 } from "native-base";
 import { ChatTeardropText, SignOut } from "phosphor-react-native";
 import { useEffect, useState } from "react";
-import { collection, getDocs } from "firebase/firestore";
+import { collection, getDocs, query, where } from "firebase/firestore";
 
 import { Alert } from "react-native";
 
@@ -51,12 +51,16 @@ export function Home() {
   }
   async function fecthData() {
     setIsLoading(true);
+    const colectionRef = collection(firestore, "orders");
+    const querySnapshot = query(
+      colectionRef,
+      where("status", "==", statusSelected)
+    );
 
-    await getDocs(collection(firestore, "orders"))
+    await getDocs(querySnapshot)
       .then((querySnapshot) => {
         const data = querySnapshot.docs.map((doc) => {
           const { plate, description, status, createdAt } = doc.data();
-          console.log("Plate", plate);
           return {
             id: doc.id,
             plate,
@@ -67,7 +71,6 @@ export function Home() {
         });
         setOrders(data);
         setIsLoading(false);
-        console.log("info", data);
       })
       .catch((error) => {
         console.log("error", error);
@@ -108,7 +111,6 @@ export function Home() {
           alignItems="center"
         >
           <Heading color="dark">Minhas ordens</Heading>
-          <Text color="gray.500">{orders.length}</Text>
         </HStack>
 
         <HStack space={3} mb={8}>
@@ -133,9 +135,11 @@ export function Home() {
           <FlatList
             data={orders}
             keyExtractor={(item) => item.id}
-            renderItem={({ item }) => (
-              <Order data={item} onPress={() => handleOpenDetails(item.id)} />
-            )}
+            renderItem={({ item }) => {
+              return (
+                <Order data={item} onPress={() => handleOpenDetails(item.id)} />
+              );
+            }}
             showsVerticalScrollIndicator={false}
             contentContainerStyle={{ paddingBottom: 50 }}
             ListEmptyComponent={() => (
