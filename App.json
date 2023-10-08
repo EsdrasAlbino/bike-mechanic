@@ -1,0 +1,53 @@
+{
+    "expo": {
+        "name": "Bike Mechanic",
+        "slug": "BikeMechanic",
+        "description": "Drescription",
+        "version": "1.0.0",
+        "orientation": "portrait",
+        "icon": "./assets/icon.png",
+        "userInterfaceStyle": "light",
+        "jsEngine": "hermes",
+        "splash": {
+            "image": "./assets/splash.png",
+            "resizeMode": "contain",
+            "backgroundColor": "#6347D2"
+        },
+        "updates": {
+            "fallbackToCacheTimeout": 0,
+            "url": "https://u.expo.dev/b8d6ec1f-8b59-4d32-9386-52cfea1b9441"
+        },
+        "assetBundlePatterns": [
+            "**/*"
+        ],
+        "ios": {
+            "supportsTablet": true,
+            "bundleIdentifier": "com.bikemechanic"
+        },
+        "android": {
+            "adaptiveIcon": {
+                "foregroundImage": "./assets/IconAndroid.png",
+                "backgroundColor": "#ffa500"
+            },
+            "package": "com.bike.mechanic",
+            "googleServicesFile": "./google-services.json",
+            "versionCode": 34
+        },
+        "web": {
+            "favicon": "./assets/favicon.png"
+        },
+        "runtimeVersion": {
+            "policy": "sdkVersion"
+        },
+        "packagerOpts": {
+            "config": "metro.config.js",
+            "sourceExts": [
+                "js",
+                "jsx",
+                "ts",
+                "tsx",
+                "svg"
+            ]
+        }
+    }
+}

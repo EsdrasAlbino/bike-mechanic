@@ -1,0 +1,29 @@
+{
+  "project_info": {
+    "project_number": "503025848117",
+    "project_id": "bike-mechanic-app",
+    "storage_bucket": "bike-mechanic-app.appspot.com"
+  },
+  "client": [
+    {
+      "client_info": {
+        "mobilesdk_app_id": "1:503025848117:android:7f2b434f22d6405922467c",
+        "android_client_info": {
+          "package_name": "com.mechanicalhelp"
+        }
+      },
+      "oauth_client": [],
+      "api_key": [
+        {
+          "current_key": "AIzaSyB_fmqJVBzdDByU1weaBytx4GO23fkEhKE"
+        }
+      ],
+      "services": {
+        "appinvite_service": {
+          "other_platform_oauth_client": []
+        }
+      }
+    }
+  ],
+  "configuration_version": "1"
+}
