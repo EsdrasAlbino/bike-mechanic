@@ -6,6 +6,7 @@ import { auth } from "../../firebase.config";
 type AuthContextType = {
   userData: User;
   setUserData: React.Dispatch<React.SetStateAction<any>>;
+  isLogged: () => void;
 };
 
 export const AuthContext = createContext<AuthContextType>(
@@ -28,9 +29,6 @@ export const AuthContextProvider: React.FC<Props> = ({ children }: Props) => {
     });
   };
 
-  useEffect(() => {
-    isLogged();
-  }, []);
 
   if (isLoading) {
     return <Loading />;
@@ -41,6 +39,7 @@ export const AuthContextProvider: React.FC<Props> = ({ children }: Props) => {
       value={{
         userData,
         setUserData,
+        isLogged,
       }}
     >
       {children}
