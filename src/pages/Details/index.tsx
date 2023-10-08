@@ -7,6 +7,9 @@ import {
   addDoc,
   serverTimestamp,
   getDocs,
+  doc,
+  setDoc,
+  getDoc,
 } from "firebase/firestore";
 
 import {
@@ -44,7 +47,7 @@ export function Details() {
 
   const route = useRoute();
   const { orderId } = route.params as RouteParams;
-
+  console.log("id order", orderId);
   const navigation = useNavigation();
 
   async function handleOrderClose() {
@@ -54,57 +57,55 @@ export function Details() {
         "Por favor, informe a solução para concluir a ordem."
       );
     }
-    console.log("init")
 
     try {
-        console.log("try")
-
-      const docRef = await addDoc(collection(firestore, "orders"), {
+      const docRef = doc(firestore, "orders", orderId);
+      const data = {
         status: "closed",
         solution,
         closedAt: serverTimestamp(),
-      });
+      };
+      await setDoc(docRef, data, { merge: true });
       console.log("Document written with ID: ", docRef.id);
       Alert.alert("Successo", "Ordem concluída.");
       navigation.goBack();
     } catch (e) {
-        console.log("catch")
-
       console.log("Error adding document: ", e);
-      Alert.alert("Alerta", "Não foi possível concluir a ordem, tente novamente.");
-    } finally{
-        setIsLoading(false)
+      Alert.alert(
+        "Alerta",
+        "Não foi possível concluir a ordem, tente novamente."
+      );
+    } finally {
+      setIsLoading(false);
     }
   }
 
   async function fecthData() {
     setIsLoading(true);
-    await getDocs(collection(firestore, "orders"))
-      .then((querySnapshot) => {
-        console.log("then")
+    const docRef = doc(firestore, "orders", orderId);
 
-        querySnapshot.docs.map((doc) => {
-          const { plate, description, status, createdAt, closedAt, solution } =
-            doc.data();
-          const closed = closedAt ? dateFormat(closedAt) : null;
-
-          setOrder({
-            id: doc.id,
-            plate,
-            description,
-            status,
-            solution,
-            when: dateFormat(createdAt),
-            closed,
-          });
+    await getDoc(docRef)
+      .then((doc) => {
+        console.log("then");
+        console.log("querySnapshot", doc.data());
+        const { plate, description, status, createdAt, closedAt, solution } =
+          doc.data();
+        const closed = closedAt ? dateFormat(closedAt) : null;
+        setOrder({
+          id: doc.id,
+          plate,
+          description,
+          status,
+          solution,
+          when: dateFormat(createdAt),
+          closed,
         });
       })
       .catch((error) => {
-
         console.log("error", error);
       })
       .finally(() => {
-        console.log("finally")
+        console.log("finally");
 
         setIsLoading(false);
       });
@@ -141,11 +142,7 @@ export function Details() {
       </HStack>
 
       <ScrollView mx={5} showsVerticalScrollIndicator={false}>
-        <CardDetails
-          title="Título"
-          description={order.plate}
-          icon={Wrench}
-        />
+        <CardDetails title="Título" description={order.plate} icon={Wrench} />
 
         <CardDetails
           title="Detalhes do problema"

@@ -111,6 +111,7 @@ export function Home() {
           alignItems="center"
         >
           <Heading color="dark">Minhas ordens</Heading>
+          <Text color="gray.500">{orders.length}</Text>
         </HStack>
 
         <HStack space={3} mb={8}>
