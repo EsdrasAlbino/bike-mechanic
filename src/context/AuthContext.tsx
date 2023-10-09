@@ -21,12 +21,8 @@ export const AuthContextProvider: React.FC<Props> = ({ children }: Props) => {
   const [userData, setUserData] = useState<User>();
   const [isLoading, setIsLoading] = useState(false);
 
-<<<<<<< HEAD
   const isLogged = async () => {
     setIsLoading(true)
-=======
-  const isLogged = () => {
->>>>>>> fix/persistenceOrdersDoneInViewOfOrderProgress
     onAuthStateChanged(auth, (user) => {
       setUserData(user);
       setIsLoading(false);
