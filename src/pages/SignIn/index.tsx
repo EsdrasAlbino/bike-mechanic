@@ -31,11 +31,11 @@ export function SignIn() {
     }
     setIsLoading(true);
 
-    await signInWithEmailAndPassword(auth, email, password)
+    signInWithEmailAndPassword(auth, email, password)
       .then(async (user) => {
         const uid = user.user.uid;
         const usersRef = doc(firestore, "users", uid);
-        const firestoreDocument = await getDoc(usersRef);
+        const firestoreDocument = await getDoc(usersRef)
         if (!firestoreDocument.exists) {
           setIsLoading(false);
           Alert.alert("Alerta", "Usuário não registrado.");

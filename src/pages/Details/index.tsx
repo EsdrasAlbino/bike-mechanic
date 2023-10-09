@@ -84,7 +84,7 @@ export function Details() {
     setIsLoading(true);
     const docRef = doc(firestore, "orders", orderId);
 
-    await getDoc(docRef)
+    getDoc(docRef)
       .then((doc) => {
         console.log("then");
         console.log("querySnapshot", doc.data());

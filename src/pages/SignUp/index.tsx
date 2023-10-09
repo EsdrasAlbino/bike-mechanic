@@ -17,16 +17,13 @@ export function SignUp() {
   const [password, setPassword] = useState("");
   const { setUserData } = useContext(AuthContext);
 
-
-
-
   async function handleSignUp() {
     if (!email || !password) {
       return Alert.alert("Alerta", "Digite o email e a password");
     }
     setIsLoading(true);
 
-    await createUserWithEmailAndPassword(auth, email, password)
+    createUserWithEmailAndPassword(auth, email, password)
       .then(async (user) => {
         setUserData(user);
         const uid = user.user.uid;
@@ -35,7 +32,7 @@ export function SignUp() {
           email,
         };
         const usersRef = doc(firestore, "users", uid);
-        await setDoc(usersRef, dataUser);
+        setDoc(usersRef, dataUser);
       })
       .catch((error) => {
         console.log(error);
