@@ -9,7 +9,7 @@ export function Routes() {
   const { userData, isLogged } = useContext(AuthContext);
 
   useEffect(() => {
-    //isLogged();
+    isLogged();
   }, []);
 
   return (

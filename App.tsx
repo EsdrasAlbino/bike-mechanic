@@ -19,8 +19,8 @@ export default function App() {
     <NativeBaseProvider theme={THEME}>
       <AuthContextProvider>
         {fontsLoaded ? <Routes /> : <Loading />}
+        <StatusBar style="auto" />
       </AuthContextProvider>
-      <StatusBar style="auto" />
     </NativeBaseProvider>
   );
 }

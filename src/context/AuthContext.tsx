@@ -19,14 +19,15 @@ type Props = {
 
 export const AuthContextProvider: React.FC<Props> = ({ children }: Props) => {
   const [userData, setUserData] = useState<User>();
-  const [isLoading, setIsLoading] = useState(true);
+  const [isLoading, setIsLoading] = useState(false);
 
   const isLogged = async () => {
+    setIsLoading(true)
     onAuthStateChanged(auth, (user) => {
       setUserData(user);
-      console.log("usere", user);
       setIsLoading(false);
     });
+    
   };
 
 

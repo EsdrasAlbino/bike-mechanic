@@ -1,5 +1,4 @@
 import { signInWithEmailAndPassword } from "firebase/auth";
-import firebase from "firebase/app";
 
 import { useContext, useState } from "react";
 import { Alert } from "react-native";
@@ -8,11 +7,11 @@ import { Heading, Icon, VStack } from "native-base";
 import { Envelope, Key } from "phosphor-react-native";
 
 import { useNavigation } from "@react-navigation/native";
+import { doc, getDoc } from "firebase/firestore";
 import { auth, firestore } from "../../../firebase.config";
 import { Button } from "../../components/Button";
 import { Input } from "../../components/Input";
 import { AuthContext } from "../../context/AuthContext";
-import { doc, getDoc } from "firebase/firestore";
 
 export function SignIn() {
   const [isLoading, setIsLoading] = useState(false);
