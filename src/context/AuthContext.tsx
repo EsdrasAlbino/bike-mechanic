@@ -21,7 +21,7 @@ export const AuthContextProvider: React.FC<Props> = ({ children }: Props) => {
   const [userData, setUserData] = useState<User>();
   const [isLoading, setIsLoading] = useState(true);
 
-  const isLogged = async () => {
+  const isLogged = () => {
     onAuthStateChanged(auth, (user) => {
       setUserData(user);
       console.log("usere", user);

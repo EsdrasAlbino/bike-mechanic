@@ -36,7 +36,7 @@ export function SignIn() {
       .then(async (user) => {
         const uid = user.user.uid;
         const usersRef = doc(firestore, "users", uid);
-        const firestoreDocument = await getDoc(usersRef);
+        const firestoreDocument = await getDoc(usersRef)
         if (!firestoreDocument.exists) {
           setIsLoading(false);
           Alert.alert("Alerta", "Usuário não registrado.");
