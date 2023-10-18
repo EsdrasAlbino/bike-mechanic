@@ -2,6 +2,7 @@ import { useEffect, useState } from "react";
 import { Alert } from "react-native";
 import { useNavigation, useRoute } from "@react-navigation/native";
 import { VStack, Text, HStack, ScrollView, Box } from "native-base";
+import firestore from "@react-native-firebase/firestore"
 
 
 import {
@@ -33,77 +34,58 @@ type OrderDetails = OrderProps & {
 
 export function Details() {
   const [isLoading, setIsLoading] = useState(true);
-  const [solution, setSolution] = useState("");
+  const [solution, setSolution] = useState('');
   const [order, setOrder] = useState<OrderDetails>({} as OrderDetails);
 
   const route = useRoute();
   const { orderId } = route.params as RouteParams;
-  console.log("id order", orderId);
+
   const navigation = useNavigation();
 
-   async function handleOrderClose() {
-    if (!solution) {
-      return Alert.alert(
-        "Alerta",
-        "Por favor, informe a solução para concluir a ordem."
-      );
-    }
+  function handleOrderClose() {
+      if(!solution) {
+          return Alert.alert('Warning', 'Please informe the solution to close the order.')
+      }
 
-    try {
-     // const docRef = doc(firestore, "orders", orderId);
-      const data = {
-        status: "closed",
-        solution,
-        //closedAt: serverTimestamp(),
-      };
-      //await setDoc(docRef, data, { merge: true });
-      //console.log("Document written with ID: ", docRef.id);
-      Alert.alert("Successo", "Ordem concluída.");
-      navigation.goBack();
-    } catch (e) {
-      console.log("Error adding document: ", e);
-      Alert.alert(
-        "Alerta",
-        "Não foi possível concluir a ordem, tente novamente."
-      );
-    } finally {
-      setIsLoading(false);
-    }
-  }
-
-  async function fecthData() {
-    setIsLoading(true);
-    //const docRef = doc(firestore, "orders", orderId);
-
-/*     getDoc(docRef)
-      .then((doc) => {
-        console.log("then");
-        console.log("querySnapshot", doc.data());
-        const { plate, description, status, createdAt, closedAt, solution } =
-          doc.data();
-        const closed = closedAt ? dateFormat(closedAt) : null;
-        setOrder({
-          id: doc.id,
-          plate,
-          description,
-          status,
+      firestore()
+      .collection<OrderFirestoreDTO>('orders')
+      .doc(orderId)
+      .update({
+          status: 'closed',
           solution,
-          when: dateFormat(createdAt),
-          closed,
-        });
+          closedAt: firestore.FieldValue.serverTimestamp()
+      })
+      .then(() => {
+          Alert.alert('Success', 'Order has been closed.')
+          navigation.goBack();
       })
       .catch((error) => {
-        console.log("error", error);
-      })
-      .finally(() => {
-        console.log("finally");
-
-        setIsLoading(false);
-      }); */
-  } 
+          console.log(error);
+          Alert.alert('Warning', 'Could not close order, try again.');
+      });
+  }
 
   useEffect(() => {
-    //fecthData();
+      firestore()
+          .collection<OrderFirestoreDTO>('orders')
+          .doc(orderId)
+          .get()
+          .then(doc => {
+              const { plate, description, status, createdAt, closedAt, solution } = doc.data();
+
+              const closed = closedAt ? dateFormat(closedAt) : null;
+
+              setOrder({
+                  id: doc.id,
+                  plate,
+                  description,
+                  status,
+                  solution,
+                  when: dateFormat(createdAt),
+                  closed,
+              })
+              setIsLoading(false);
+          })
   }, []);
 
   if (isLoading) {
@@ -162,7 +144,7 @@ export function Details() {
 
       {order.status === "open" && (
         <Button title="Concluir ordem" m={5} 
-        //onPress={handleOrderClose} 
+        onPress={handleOrderClose} 
         />
       )}
     </VStack>

@@ -42,32 +42,34 @@ export function Home() {
   }
 
   function handleLogout() {
-/*     auth()
+    auth()
       .signOut()
       .catch((error) => {
         console.log(error);
         return Alert.alert("Logout", "Failed to log out");
-      }); */
+      });
   }
 
   useEffect(() => {
-/*     firestore()
+    firestore()
       .collection("orders")
       .where("status", "==", statusSelected)
-      .get()
-      .then((querySnapshot) => {
-        const orders = [];
+      .onSnapshot((snapshot) => {
+        const data = snapshot.docs.map((doc) => {
+          const { plate, description, status, createdAt } = doc.data();
 
-        querySnapshot.forEach((documentSnapshot) => {
-          orders.push({
-            ...documentSnapshot.data(),
-            id: documentSnapshot.id,
-          });
+          return {
+            id: doc.id,
+            plate,
+            description,
+            status,
+            when: dateFormat(createdAt),
+          };
         });
-        setOrders(orders);
-      }); */
 
-    setIsLoading(false);
+        setOrders(data);
+        setIsLoading(false);
+      });
 
     //return () => request();
   }, [statusSelected]);

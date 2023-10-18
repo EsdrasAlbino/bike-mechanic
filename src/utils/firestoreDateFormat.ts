@@ -1,7 +1,6 @@
-import {} from "firebase/firestore";
-//import { FirebaseFirestoreTypes } from "@react-native-firebase/firestore";
+import { FirebaseFirestoreTypes } from "@react-native-firebase/firestore";
 
-export function dateFormat(tipestamp) {
+export function dateFormat(tipestamp: FirebaseFirestoreTypes.Timestamp) {
   if (tipestamp) {
     const date = new Date(tipestamp.toDate());
 
