@@ -10,19 +10,19 @@ import {
 } from "native-base";
 import { ChatTeardropText, SignOut } from "phosphor-react-native";
 import { useEffect, useState } from "react";
-import { collection, getDocs, query, where } from "firebase/firestore";
 
 import { Alert } from "react-native";
 
 import { dateFormat } from "../../utils/firestoreDateFormat";
 
 import Logo from "../../assets/logo_secondary.svg";
+import firestore from "@react-native-firebase/firestore";
 
-import { app, firestore } from "../../../firebase.config";
 import { Button } from "../../components/Button";
 import { Filter } from "../../components/Filter";
 import { Loading } from "../../components/Loading";
 import { Order, OrderProps } from "../../components/Order";
+import auth from "@react-native-firebase/auth";
 
 export function Home() {
   const [isLoading, setIsLoading] = useState(true);
@@ -42,45 +42,34 @@ export function Home() {
   }
 
   function handleLogout() {
-    /*         auth()
-            .signOut()
-            .catch(error => {
-                console.log(error);
-                return Alert.alert('Logout', 'Failed to log out')
-            }); */
-  }
-  async function fecthData() {
-    setIsLoading(true);
-    const colectionRef = collection(firestore, "orders");
-    const querySnapshot = query(
-      colectionRef,
-      where("status", "==", statusSelected)
-    );
-
-    getDocs(querySnapshot)
-      .then((querySnapshot) => {
-        const data = querySnapshot.docs.map((doc) => {
-          const { plate, description, status, createdAt } = doc.data();
-          return {
-            id: doc.id,
-            plate,
-            description,
-            status,
-            when: dateFormat(createdAt),
-          };
-        });
-        setOrders(data);
-        setIsLoading(false);
-      })
+/*     auth()
+      .signOut()
       .catch((error) => {
-        console.log("error", error);
-      })
-      .finally(() => {
-        setIsLoading(false);
-      });
+        console.log(error);
+        return Alert.alert("Logout", "Failed to log out");
+      }); */
   }
+
   useEffect(() => {
-    fecthData();
+/*     firestore()
+      .collection("orders")
+      .where("status", "==", statusSelected)
+      .get()
+      .then((querySnapshot) => {
+        const orders = [];
+
+        querySnapshot.forEach((documentSnapshot) => {
+          orders.push({
+            ...documentSnapshot.data(),
+            id: documentSnapshot.id,
+          });
+        });
+        setOrders(orders);
+      }); */
+
+    setIsLoading(false);
+
+    //return () => request();
   }, [statusSelected]);
 
   return (

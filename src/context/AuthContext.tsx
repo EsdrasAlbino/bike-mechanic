@@ -1,12 +1,9 @@
-import { User, onAuthStateChanged } from "firebase/auth";
-import { createContext, useEffect, useState } from "react";
+import { createContext, useState } from "react";
 import { Loading } from "../components/Loading";
-import { auth } from "../../firebase.config";
+import auth, { FirebaseAuthTypes } from "@react-native-firebase/auth";
 
 type AuthContextType = {
-  userData: User;
-  setUserData: React.Dispatch<React.SetStateAction<any>>;
-  isLogged: () => void;
+  value: number;
 };
 
 export const AuthContext = createContext<AuthContextType>(
@@ -18,29 +15,12 @@ type Props = {
 };
 
 export const AuthContextProvider: React.FC<Props> = ({ children }: Props) => {
-  const [userData, setUserData] = useState<User>();
-  const [isLoading, setIsLoading] = useState(false);
-
-  const isLogged = async () => {
-    setIsLoading(true)
-    onAuthStateChanged(auth, (user) => {
-      setUserData(user);
-      setIsLoading(false);
-    });
-    
-  };
-
-
-  if (isLoading) {
-    return <Loading />;
-  }
+  let value = 0;
 
   return (
     <AuthContext.Provider
       value={{
-        userData,
-        setUserData,
-        isLogged,
+        value,
       }}
     >
       {children}

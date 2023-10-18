@@ -1,9 +1,9 @@
-import { extendTheme } from 'native-base';
+import { extendTheme } from "native-base";
 
 export const THEME = extendTheme({
   fonts: {
-    heading: 'Roboto_700Bold',
-    body: 'Roboto_400Regular',
+    heading: "Roboto_700Bold",
+    body: "Roboto_400Regular",
   },
   fontSizes: {
     xs: 12,
@@ -12,6 +12,9 @@ export const THEME = extendTheme({
     lg: 20,
   },
   sizes: {
-    14: 56
-  }
+    14: 56,
+  },
+  bg: {
+    orange: "#ffa500",
+  },
 });

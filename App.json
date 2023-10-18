@@ -5,13 +5,11 @@
         "description": "Drescription",
         "version": "1.0.0",
         "orientation": "portrait",
-        "icon": "./assets/icon.png",
         "userInterfaceStyle": "light",
         "jsEngine": "hermes",
         "splash": {
-            "image": "./assets/splash.png",
             "resizeMode": "contain",
-            "backgroundColor": "#6347D2"
+            "backgroundColor": "#ffa500"
         },
         "updates": {
             "fallbackToCacheTimeout": 0,
@@ -22,11 +20,11 @@
         ],
         "ios": {
             "supportsTablet": true,
-            "bundleIdentifier": "com.bikemechanic"
+            "bundleIdentifier": "com.bikemechanic",
+            "googleServicesFile": "./GoogleService-info.plist"
         },
         "android": {
             "adaptiveIcon": {
-                "foregroundImage": "./assets/IconAndroid.png",
                 "backgroundColor": "#ffa500"
             },
             "package": "com.bike.mechanic",
@@ -48,6 +46,23 @@
                 "tsx",
                 "svg"
             ]
-        }
+        },
+        "plugins": [
+            "@react-native-firebase/app",
+            [
+                "expo-build-properties",
+                {
+                    "ios": {
+                        "useFrameworks": "static"
+                    }
+                }
+            ],
+            [
+                "expo-barcode-scanner",
+                {
+                    "cameraPermission": "Allow $(PRODUCT_NAME) to access camera."
+                }
+            ]
+        ]
     }
 }

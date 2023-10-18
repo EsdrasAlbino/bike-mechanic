@@ -1,7 +1,6 @@
-import { getFirestore } from "@firebase/firestore";
-import { getAnalytics } from "firebase/analytics";
-import { initializeApp } from "firebase/app";
-import { getAuth } from "firebase/auth";
+import firebase from "@react-native-firebase/app";
+import "@react-native-firebase/auth";
+import "@react-native-firebase/firestore";
 
 const firebaseConfig = {
   apiKey: "AIzaSyCJYWSp8SQ1tfVQtZasxLOBAQ8OlmcN6B0",
@@ -13,7 +12,15 @@ const firebaseConfig = {
   measurementId: "G-WTHZBLMJVG",
 };
 
-export const app = initializeApp(firebaseConfig);
-export const auth = getAuth(app);
-export const analytics = getAnalytics(app);
-export const firestore = getFirestore(app);
+const config = {
+  name: "Tangram Educação",
+};
+let app;
+if (firebase.apps.length === 0) {
+  app = firebase.initializeApp(firebaseConfig);
+} else {
+  app = firebase.app();
+}
+
+//export const db = firebase.firestore();
+//export const auth = firebase.auth();

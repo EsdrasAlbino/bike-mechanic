@@ -2,15 +2,7 @@ import { useEffect, useState } from "react";
 import { Alert } from "react-native";
 import { useNavigation, useRoute } from "@react-navigation/native";
 import { VStack, Text, HStack, ScrollView, Box } from "native-base";
-import {
-  collection,
-  addDoc,
-  serverTimestamp,
-  getDocs,
-  doc,
-  setDoc,
-  getDoc,
-} from "firebase/firestore";
+
 
 import {
   CircleWavyCheck,
@@ -28,7 +20,6 @@ import { Button } from "../../components/Button";
 
 import { OrderFirestoreDTO } from "../../DTOs/OrderDTO";
 import { dateFormat } from "../../utils/firestoreDateFormat";
-import { app, firestore } from "../../../firebase.config";
 
 type RouteParams = {
   orderId: string;
@@ -50,7 +41,7 @@ export function Details() {
   console.log("id order", orderId);
   const navigation = useNavigation();
 
-  async function handleOrderClose() {
+   async function handleOrderClose() {
     if (!solution) {
       return Alert.alert(
         "Alerta",
@@ -59,14 +50,14 @@ export function Details() {
     }
 
     try {
-      const docRef = doc(firestore, "orders", orderId);
+     // const docRef = doc(firestore, "orders", orderId);
       const data = {
         status: "closed",
         solution,
-        closedAt: serverTimestamp(),
+        //closedAt: serverTimestamp(),
       };
-      await setDoc(docRef, data, { merge: true });
-      console.log("Document written with ID: ", docRef.id);
+      //await setDoc(docRef, data, { merge: true });
+      //console.log("Document written with ID: ", docRef.id);
       Alert.alert("Successo", "Ordem concluída.");
       navigation.goBack();
     } catch (e) {
@@ -82,9 +73,9 @@ export function Details() {
 
   async function fecthData() {
     setIsLoading(true);
-    const docRef = doc(firestore, "orders", orderId);
+    //const docRef = doc(firestore, "orders", orderId);
 
-    getDoc(docRef)
+/*     getDoc(docRef)
       .then((doc) => {
         console.log("then");
         console.log("querySnapshot", doc.data());
@@ -108,11 +99,11 @@ export function Details() {
         console.log("finally");
 
         setIsLoading(false);
-      });
-  }
+      }); */
+  } 
 
   useEffect(() => {
-    fecthData();
+    //fecthData();
   }, []);
 
   if (isLoading) {
@@ -170,7 +161,9 @@ export function Details() {
       </ScrollView>
 
       {order.status === "open" && (
-        <Button title="Concluir ordem" m={5} onPress={handleOrderClose} />
+        <Button title="Concluir ordem" m={5} 
+        //onPress={handleOrderClose} 
+        />
       )}
     </VStack>
   );
